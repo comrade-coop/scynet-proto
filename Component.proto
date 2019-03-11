@@ -5,7 +5,7 @@ package Scynet;
 option csharp_namespace = "Scynet";
 
 /**
-* The Api whic is implemented by the different components.
+* The Api which is implemented by the different components.
 * It is caled by the hatchery to instantiate the agents.
 */
 service Component {
