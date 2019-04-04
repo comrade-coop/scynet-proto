@@ -16,6 +16,8 @@ message Agent {
 	// The cost of transferring the agent from one hatchery to another should be in the 1-5 range.
 	// One layer in a neural network is likely in the 10-100 range.
 	// Agents should not include the prices of their inputs if the latter are listed in the structure.
+	double performance = 10;
+	map<string, bytes> metadata = 11;
 }
 
 message Shape {
