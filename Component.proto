@@ -34,7 +34,14 @@ message AgentStartRequest {
 }
 
 message AgentRequest {
-	string uuid = 1; // The universal identifier of the agent we want to get.
+	enum AgentRequestType {
+		start = 0;
+		stop = 1;
+		statu = 2;
+		input = 3;
+	}
+	Agent agent = 1;
+	AgentRequestType type = 2;
 }
 
 // Used for different filters that can be applied to the query.

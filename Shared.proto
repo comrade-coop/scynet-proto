@@ -1,23 +1,71 @@
 syntax = "proto3";
 
+import "google/protobuf/any.proto";
+
 package Scynet;
+option java_package = "ai.scynet";
 option csharp_namespace = "Scynet";
+
+message ComponentRegister {
+	string uuid = 2; // The universal id of the component.
+	string address = 1; // The place we can connect to the component to call methods on it.
+	repeated string runnerType = 3; // The types of eggs this component can run as agents.
+	Status status = 4;
+}
+
+enum Status {
+	running = 0;
+	stopped = 1;
+	waiting = 2;
+	critical = 3;
+	dead = 4;
+}
+
+message AgentRequest {
+	enum AgentRequestType {
+		start = 0;
+		stop = 1;
+		status = 2;
+		input = 3;
+	}
+	Agent agent = 1;
+	AgentRequestType type = 2;
+}
 
 // All the data that defines an agent and is needed for executing it.
 message Agent {
 	string uuid = 1;
-	bytes eggData = 3; // optional
-	string componentType = 4; // the type that can execute this agent.
-	string componentId = 5; // id of the component in which the agent is running
+	repeated Any data = 11;
+	// Contains one of te messages described below.
+	// When creating agents the component should try to send as much of them as posssible. 
+	// When instantiating agents we can just send, the agentData and the initial inputs. 
+	// When changeing the inputs only they can be send.
+}
+
+message AgentEgg {
+	bytes eggData = 3;
+}
+
+message AgentInput {
 	repeated string inputs = 6;
+}
+
+message AgentOutput {
 	repeated Shape outputs = 7;
+}
+
+message AgentComponent {
+	string type = 4; // the type that can execute this agent.
+	string id = 5; // id of the component in which the agent originated.
+}
+
+message AgentMarket {
+	float performance = 10;
 	uint32 frequency = 8;
 	uint32 price = 9; // the cost of running the agent, mainly for use when making decisions about it
 	// The cost of transferring the agent from one hatchery to another should be in the 1-5 range.
 	// One layer in a neural network is likely in the 10-100 range.
 	// Agents should not include the prices of their inputs if the latter are listed in the structure.
-	double performance = 10;
-	map<string, bytes> metadata = 11;
 }
 
 message Shape {
@@ -28,8 +76,6 @@ message Blob {
 	Shape shape = 7;
 	repeated float data = 5 [packed = true];
 	repeated float diff = 6 [packed = true];
-	repeated double double_data = 8 [packed = true];
-	repeated double double_diff = 9 [packed = true];
 }
 
 message Void {

@@ -64,7 +64,7 @@ message SubscriptionRequest {
 
 	oneof agent {
 		string agentType = 2; // The type of agent we want to subscribe to. Used when subscriing to remote agents that
-		string agetnId = 3; // The agent's output that we will subscribe to.
+		string agentId = 3; // The agent's output that we will subscribe to.
 	}
 
 	bool strongOrdering = 4; // Used to determine if we want the order of the messages to be absoulte.
