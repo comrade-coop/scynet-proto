@@ -33,17 +33,6 @@ message AgentStartRequest {
 	Agent egg = 2; // The egg that will be used only when creating the agent. It contains the uuid of the agent
 }
 
-message AgentRequest {
-	enum AgentRequestType {
-		start = 0;
-		stop = 1;
-		statu = 2;
-		input = 3;
-	}
-	Agent agent = 1;
-	AgentRequestType type = 2;
-}
-
 // Used for different filters that can be applied to the query.
 message AgentQuery {
 

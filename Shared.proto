@@ -35,7 +35,7 @@ message AgentRequest {
 // All the data that defines an agent and is needed for executing it.
 message Agent {
 	string uuid = 1;
-	repeated Any data = 11;
+	repeated google.protobuf.Any data = 11;
 	// Contains one of te messages described below.
 	// When creating agents the component should try to send as much of them as posssible. 
 	// When instantiating agents we can just send, the agentData and the initial inputs. 
